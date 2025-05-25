@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Rating } from "@mui/material";
 import CurrencyFormat from "../CurrencyFormat/CurrencyFormat";
 import classes from "./product.module.css";
+import {Link} from "react-router-dom";
 
 function ProductCard({ product }) {
   // Guard clause to avoid error
@@ -14,13 +15,13 @@ function ProductCard({ product }) {
 
   return (
     <div className={classes.card__container}>
-      <a href="#">
+      <Link to={`/products/${id}`}>
         <img
           src={image || "https://via.placeholder.com/150"}
           alt={title}
           className={classes.card__image}
         />
-      </a>
+      </Link>
       <div>
         <h3>{title}</h3>
         <div className={classes.rating}>
