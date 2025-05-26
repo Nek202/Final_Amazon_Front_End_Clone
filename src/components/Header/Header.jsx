@@ -4,10 +4,18 @@ import { Link } from "react-router-dom";
 import classes from "./Header.module.css"; // Assuming you're using CSS Modules
 import { SlLocationPin } from "react-icons/sl";
 import LowHeader from "./LowHeader";
+import { DataContext } from "../DataProvider/DataProvider";
+import { useContext } from "react";
 
 const Header = () => {
+  
+  const context = useContext(DataContext);
+  // Adjust according to how DataProvider provides the value
+  // For example, if context = { state, dispatch }, use:
+  const { state, dispatch } = context;
+  console.log(state && state.basket ? state.basket.length : 0);
   return (
-    <>
+    <section className={classes.fixed}>
       <section>
         <div className={classes.header__container}>
           {/* Logo Section */}
@@ -56,18 +64,36 @@ const Header = () => {
 
             <Link to="/orders">
               <p>Returns</p>
-              <span>& Orders</span>
             </Link>
-
             <Link to="/cart" className={classes.cart}>
-              <BiCart size={35} />
-              <span>&</span>
+              <div
+                className={classes.cartIconWrapper}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <BiCart size={35} />
+                <span
+                  className={classes.cartCount}
+                  style={{
+                    position: "absolute",
+                    top: "-8px",
+                    right: "-8px",
+                    // background: "gray",
+                    color: "orange",
+                    // borderRadius: "50%",
+                    padding: "2px 6px",
+                    fontSize: "1px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {state && state.basket ? state.basket.length : 0}
+                </span>
+              </div>
             </Link>
           </div>
         </div>
       </section>
       <LowHeader />
-    </>
+    </section>
   );
 };
 
