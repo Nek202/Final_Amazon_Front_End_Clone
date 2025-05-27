@@ -18,6 +18,7 @@ function ProductDetail() {
       .then((res) => {
         setProduct(res.data);
         setIsLoading(false);
+       
       })
       .catch((err) => {
         console.log(err);
@@ -56,6 +57,7 @@ function ProductDetail() {
           <CurrencyFormat amount={product.price} />
           <br />
           <button>Add to Cart</button>
+         
         </div>
       </div>
     </LayOut>

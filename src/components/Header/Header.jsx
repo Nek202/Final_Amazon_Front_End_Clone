@@ -8,12 +8,13 @@ import { DataContext } from "../DataProvider/DataProvider";
 import { useContext } from "react";
 
 const Header = () => {
-  
-  const context = useContext(DataContext);
-  // Adjust according to how DataProvider provides the value
-  // For example, if context = { state, dispatch }, use:
-  const { state, dispatch } = context;
-  console.log(state && state.basket ? state.basket.length : 0);
+  const { state, dispatch } = useContext(DataContext);
+  const basket = state?.basket || [];
+  const totalItem = basket.reduce((amount, item) => {
+    return item.amount + amount;
+  }, 0);
+
+  // console.log(state && state.basket ? state.basket.length : 0);
   return (
     <section className={classes.fixed}>
       <section>
@@ -63,7 +64,7 @@ const Header = () => {
             </Link>
 
             <Link to="/orders">
-              <p>Returns</p>
+              <p>Returns & Orders</p>
             </Link>
             <Link to="/cart" className={classes.cart}>
               <div
@@ -71,21 +72,8 @@ const Header = () => {
                 style={{ position: "relative", display: "inline-block" }}
               >
                 <BiCart size={35} />
-                <span
-                  className={classes.cartCount}
-                  style={{
-                    position: "absolute",
-                    top: "-8px",
-                    right: "-8px",
-                    // background: "gray",
-                    color: "orange",
-                    // borderRadius: "50%",
-                    padding: "2px 6px",
-                    fontSize: "1px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {state && state.basket ? state.basket.length : 0}
+                <span className={classes.cartCount}>
+                  {totalItem}
                 </span>
               </div>
             </Link>

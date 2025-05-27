@@ -35,7 +35,7 @@ function Results() {
           style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
         >
           {results.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} renderAdd={true} />
           ))}
         </div>
       </section>

@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 import classes from "./product.module.css";
 import PropTypes from "prop-types";
 
-function ProductCard({ product }) {
+function ProductCard({ product,flex,renderDesc,renderAdd }) {
   if (!product) return <div>Product not found.</div>;
 
   const { image, title, id, rating, price } = product;
 
   // 👉 useContext returns { state, dispatch }:
   const { state, dispatch } = useContext(DataContext);
-  console.log(state);
+  console.log(state); // Uncomment and specify a property if needed, e.g., state.basket
   const addToCart = () => {
     dispatch({
       type: Type.ADD_TO_BASKET, // lowercase “type”
@@ -41,9 +41,11 @@ function ProductCard({ product }) {
         <div>
           <CurrencyFormat amount={price} />
         </div>
-        <button className={classes.button} onClick={addToCart}>
-          Add to Cart
-        </button>
+        {renderAdd && 
+          <button className={classes.button} onClick={addToCart}>
+            Add to Cart
+          </button>
+        }
       </div>
     </div>
   );
