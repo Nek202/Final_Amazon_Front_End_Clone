@@ -7,10 +7,10 @@ import Orders from "./Pages/Orders/Orders";
 import Cart from "./Pages/Cart/Cart";
 import Results from "./Pages/Results/Results";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
-
+import { HashRouter } from "react-router-dom";
 function Routing() {
   return (
-    <Router>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Signup />} />
@@ -20,7 +20,7 @@ function Routing() {
         <Route path="/category/:categoryName" element={<Results />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
       </Routes>
-    </Router>
+    </HashRouter>
   );
 }
 
