@@ -9,13 +9,12 @@ import { BrowserRouter } from "react-router-dom"; // ✅ Import this
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename="/Amazon_front_end_Clone">
-      {" "}
-      {/* ✅ Add this */}
-      <DataProvider reducer={reducer} initialState={initialState}>
-        <App />
-      </DataProvider>
-    </BrowserRouter>{" "}
+    {" "}
+    {/* ✅ Add this */}
+    <DataProvider reducer={reducer} initialState={initialState}>
+      <App />
+    </DataProvider>
     {/* ✅ Close it here */}
   </StrictMode>
 );
+ 
