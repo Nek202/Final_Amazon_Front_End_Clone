@@ -6,9 +6,10 @@ import { SlLocationPin } from "react-icons/sl";
 import LowHeader from "./LowHeader";
 import { DataContext } from "../DataProvider/DataProvider";
 import { useContext } from "react";
+import { auth } from "../../Utility/firebase";
 
 const Header = () => {
-  const { state, dispatch } = useContext(DataContext);
+  const { user, state, dispatch } = useContext(DataContext);
   const basket = state?.basket || [];
   const totalItem = basket.reduce((amount, item) => {
     return item.amount + amount;
@@ -46,7 +47,7 @@ const Header = () => {
               <option value="">EM</option>
             </select>
             <input type="text" />
-            <BsSearch size={25} />
+            <BsSearch size={38} />
           </div>
 
           {/* Navigation Section */}
@@ -58,9 +59,20 @@ const Header = () => {
               />
             </Link>
 
-            <Link to="">
-              <p>Sign In</p>
-              <span>Account & Lists</span>
+            <Link to={!user && "/Auth"}>
+              <div>
+                {user ? (
+                  <>
+                    <p>Hello {user?.email?.split("@")[0]} </p>
+                    <span onClick={()=>auth.signOut()}>Sign Out</span>
+                  </>
+                ) : (
+                  <>
+                    <p>Hello, Sign In</p>
+                    <span>Account & Lists</span>
+                  </>
+                )}
+              </div>
             </Link>
 
             <Link to="/orders">
@@ -72,9 +84,7 @@ const Header = () => {
                 style={{ position: "relative", display: "inline-block" }}
               >
                 <BiCart size={35} />
-                <span className={classes.cartCount}>
-                  {totalItem}
-                </span>
+                <span className={classes.cartCount}>{totalItem}</span>
               </div>
             </Link>
           </div>

@@ -15,7 +15,7 @@ function ProductCard({ product,flex,renderDesc,renderAdd }) {
 
   // 👉 useContext returns { state, dispatch }:
   const { state, dispatch } = useContext(DataContext);
-  console.log(state); // Uncomment and specify a property if needed, e.g., state.basket
+  // console.log(state); // Uncomment and specify a property if needed, e.g., state.basket
   const addToCart = () => {
     dispatch({
       type: Type.ADD_TO_BASKET, // lowercase “type”
