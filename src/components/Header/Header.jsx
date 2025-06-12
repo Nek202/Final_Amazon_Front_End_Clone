@@ -1,7 +1,7 @@
 import { BsSearch } from "react-icons/bs";
 import { BiCart } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import classes from "./Header.module.css"; // Assuming you're using CSS Modules
+import classes from "./Header.module.css";
 import { SlLocationPin } from "react-icons/sl";
 import LowHeader from "./LowHeader";
 import { DataContext } from "../DataProvider/DataProvider";
@@ -9,13 +9,18 @@ import { useContext } from "react";
 import { auth } from "../../Utility/firebase";
 
 const Header = () => {
-  const { user, state, dispatch } = useContext(DataContext);
+  const { state, dispatch } = useContext(DataContext);
+  const user = state?.user;
   const basket = state?.basket || [];
+
   const totalItem = basket.reduce((amount, item) => {
     return item.amount + amount;
   }, 0);
 
-  // console.log(state && state.basket ? state.basket.length : 0);
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+
   return (
     <section className={classes.fixed}>
       <section>
@@ -42,7 +47,7 @@ const Header = () => {
 
           {/* Search Section */}
           <div className={classes.search}>
-            <select name="" id="">
+            <select>
               <option value="">All</option>
               <option value="">EM</option>
             </select>
@@ -59,25 +64,24 @@ const Header = () => {
               />
             </Link>
 
-            <Link to={!user && "/Auth"}>
-              <div>
-                {user ? (
-                  <>
-                    <p>Hello {user?.email?.split("@")[0]} </p>
-                    <span onClick={()=>auth.signOut()}>Sign Out</span>
-                  </>
-                ) : (
-                  <>
-                    <p>Hello, Sign In</p>
-                    <span>Account & Lists</span>
-                  </>
-                )}
+            {user ? (
+              <div onClick={handleSignOut} style={{ cursor: "pointer" }}>
+                <p>Hello {user?.email?.split("@")[0]}</p>
+                <span>Sign Out</span>
               </div>
-            </Link>
+            ) : (
+              <Link to="/Auth">
+                <div>
+                  <p>Hello, Sign In</p>
+                  <span>Account & Lists</span>
+                </div>
+              </Link>
+            )}
 
             <Link to="/orders">
               <p>Returns & Orders</p>
             </Link>
+
             <Link to="/cart" className={classes.cart}>
               <div
                 className={classes.cartIconWrapper}

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import classes from "./Auth.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../../Utility/firebase";
 import {
   signInWithEmailAndPassword,
@@ -20,6 +20,7 @@ function Auth() {
   });
   const { user, dispatch } = useContext(DataContext);
   const navigate = useNavigate();
+  const navStateData = useLocation();
 
   const authHandler = async (e) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ function Auth() {
           });
           setError(""); // Clear any previous errors
           setLoading({ ...loading, signIn: false });
-          navigate("/");
+          navigate(navStateData?.state?.redirect || "/");
         })
         .catch((err) => {
           setError(err.message);
@@ -54,10 +55,10 @@ function Auth() {
           });
           setError(""); // Clear any previous errors
           setLoading({ ...loading, signUp: false });
-          navigate("/");
+          navigate(navStateData?.state?.redirect || "/");
         })
         .catch((err) => {
-          // console.log(err);
+          setError(err.message); // <-- Add this line
           setLoading({ ...loading, signUp: false });
         });
     }
@@ -74,6 +75,19 @@ function Auth() {
 
       <div className={classes.login__container}>
         <h1>Sign In</h1>
+
+        {navStateData?.state?.msg && (
+          <small
+            style={{
+              padding: "5px",
+              textAlign: "center",
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            {navStateData?.state?.msg}
+          </small>
+        )}
 
         {/* Display error message */}
         {error && (
