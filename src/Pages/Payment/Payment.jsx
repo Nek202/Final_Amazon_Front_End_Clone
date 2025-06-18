@@ -70,7 +70,7 @@ function Payment() {
       //3. after the confirmation --> order firestore database save, then clear basket
       await db
         .collection("users")
-        .doc(user?.id)
+        .doc(user?.uid)
         .collection("orders")
         .doc(paymentIntent.id)
         .set({
